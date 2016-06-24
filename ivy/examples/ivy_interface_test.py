@@ -2,7 +2,7 @@
 
 import time
 from thread import start_new_thread
-from ivy_calibration_node import *
+from Ivy_Calibration_Node import *
 from ivy.std_api import *
 
 IvyInitStart()
