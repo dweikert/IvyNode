@@ -27,16 +27,19 @@ Class Ivy_Calibration_Node:
         """
         return copterPos
 
-    def IvySendParams(AC_ID, x, y, z):
-        """Sends the given parameters via Ivy
+    def IvySendCalib(AC_ID, param_ID, value):
+        """Sends the given parameter via Ivy
 
+        param_IDs:  phi   = 58
+                    theta = 59
+                    psi   = 60
         """
-        #TODO implement correct messsage format
-        IvySendMsg('%d DL %d %d %d' %
+
+        IvySendMsg('dl DL_SETTING %d %d %f' %
                     (AC_ID,
-                    x,
-                    y,
-                    z))
+                    param_ID,
+                    value
+                    ))
 
     def IvyInitStop():
         """Stops the Ivy Server.
