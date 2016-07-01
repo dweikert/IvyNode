@@ -5,44 +5,37 @@ from std_msgs.msg import String
 from geometry_msgs.msg import Pose2D
 import time
 
-class Ivy_Calibration_Node:
+class IvyCalibrationNode:
     def IvyInitStart(self):
         """ Initializes the Ivy Server and ROS Subscriber
 
         Should only be called once per session.
         """
-
-
         try:
             IvyInit('Calibration Node', '', 0)
         except AssertionError:
             print('Assertion Error in IvyInit(!= none), is there a server already running? Exiting')
             IvyStop()
             raise SystemExit()
-
-        print('asd')
         IvyStart()
         try:
             self.initRosSub()
         except rospy.exceptions.ROSInitException as e:
             print('\nInitialization failed due to ROS error, exiting...')
             self.IvyInitStop()
-
         time.sleep(1)
         print('Ivy Calibration Node ready!')
 
 
-
     def IvyInitStop(self):
         """Stops the Ivy Server.
-
         """
         time.sleep(1)
         IvyStop()
 
+
     def handlePos(data):
         """ Callback for the ROS subscriber.
-
 
         """
         global copterPos
@@ -67,8 +60,6 @@ class Ivy_Calibration_Node:
         rospy.Subscriber("copters/0/pose", Pose2D, self.handlePos)
 
 
-
-
     def IvyGetPos(self):
         """Simply returns the position grabbed via ROS to the caller
 
@@ -83,11 +74,13 @@ class Ivy_Calibration_Node:
     def IvySendCalib(self,AC_ID, param_ID, value):
         """Sends the given parameter via Ivy
 
-        param_IDs:  phi   = 58
-                    theta = 59
-                    psi   = 60
+        AC_ID:      ID of the aricraft to be calibrated
+        param_ID:   ID of the parameter to be calibrated
+                     phi   = 58
+                     theta = 59
+                     psi   = 60
+        value:      value to be set for the parameter !in degrees!
         """
-
         IvySendMsg('dl DL_SETTING %d %d %f' %
                     (AC_ID,
                     param_ID,
@@ -96,6 +89,18 @@ class Ivy_Calibration_Node:
 
 
     def IvySendKill(self, AC_ID):
+        """Sends a kill message to the aircraft
+
+        """
         IvySendMsg('dl KILL %d 1' %
-        AC_ID
-        ))
+                    (AC_ID
+                    ))
+
+
+    def IvySendUnKill(self, AC_ID):
+        """Sends an unkill message to the aircraft
+
+        """
+        IvySendMsg('dl KILL %d 0' %
+                    (AC_ID
+                    ))
