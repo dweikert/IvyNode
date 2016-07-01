@@ -93,3 +93,9 @@ class Ivy_Calibration_Node:
                     param_ID,
                     value
                     ))
+
+
+    def IvySendKill(self, AC_ID):
+        IvySendMsg('dl KILL %d 1' %
+        AC_ID
+        ))
