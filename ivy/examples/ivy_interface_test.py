@@ -6,12 +6,13 @@ from Ivy_Calibration_Node import *
 from ivy.std_api import *
 
 IvyInitStart()
-IvyTest()
-pose = IvyGetPos()
+
+
 #dostuff
-IvySendParams(pose.x,pose.y,pose.theta,0)
+IvySendCalib(5,58,0.5)
 time.sleep(2)
 #domorestuff
-pose = IvyGetPos()
-IvySendParams(pose.x,pose.y,pose.theta,0)
+IvySendCalib(5,59,0.7)
+time.sleep(2)
+IvySendCalib(5,60,0.9)
 IvyStop()
