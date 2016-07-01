@@ -60,3 +60,6 @@ def initRosSub():
     """
     rospy.init_node('poseListener', anonymous=False)
     rospy.Subscriber("pose", Pose2D, handlePos)
+
+def IvyGetParam():
+    IvySendMsg('dl GET_DL_SETTING 5 58')
